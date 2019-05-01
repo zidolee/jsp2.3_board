@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>board</display-name>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>MemberBoard</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -9,22 +9,52 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+  <!-- 커넥션 풀 설정 -->
   <listener>
-  	<listener-class>jdbc.DBCPInitListener</listener-class>
+    <listener-class>jdbc.DBCPInitListener</listener-class>
   </listener>
-  
   <context-param>
-		<param-name>poolConfig</param-name>
-		<param-value>
-			jdbcdriver=com.mysql.jdbc.Driver
-			jdbcUrl=jdbc:mysql://localhost:3306/board?characterEncoding=utf8
-			dbUser=multi
-			dbPass=1234
-			validationQuery=select 1
-			minIdle=3
-			maxTotal=30
-			poolName=board
-		</param-value>
-	</context-param>
+    <param-name>poolConfig</param-name>
+    <param-value>
+  		jdbcdriver=com.mysql.jdbc.Driver
+  		jdbcUrl=jdbc:mysql://localhost:3306/board?characterEncoding=utf8&amp;serverTimezone=UTC
+  		dbUser=multi
+  		dbPass=1234
+  		validationQuery=select 1
+  		minIdle=3
+  		maxTotal=30
+  		poolName=board
+  	</param-value>
+  </context-param>
+  
+  <!-- Encoding Filter -->
+  <filter>
+  	<filter-name>encodingFilter</filter-name>
+  	<filter-class>util.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>utf-8</param-value>
+  	</init-param>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>encodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- Controller(servlet) -->
+  <servlet>
+  	<servlet-name>ControllerUsingURI</servlet-name>
+  	<servlet-class>mvc.controller.ControllerUsingURI</servlet-class>
+  	<init-param>
+  		<param-name>configFile</param-name>
+  		<param-value>/WEB-INF/properties/commandHandlerURI.properties</param-value>
+  	</init-param>
+  	<load-on-startup>1</load-on-startup>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>ControllerUsingURI</servlet-name>
+  	<url-pattern>*.do</url-pattern>
+  </servlet-mapping>
 </web-app>
