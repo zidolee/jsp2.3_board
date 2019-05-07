@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>가입완료</title>
+<title>Insert title here</title>
 </head>
 <body>
-	${param.name }님, 회원 가입에 성공했습니다.
-	<a href="join.do">회원가입 페이지.</a>
+
 </body>
 </html>
