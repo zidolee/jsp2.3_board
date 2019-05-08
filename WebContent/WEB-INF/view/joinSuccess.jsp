@@ -8,6 +8,5 @@
 </head>
 <body>
 	${param.name }님, 회원 가입에 성공했습니다.
-	<a href="join.do">회원가입 페이지.</a>
 </body>
 </html>
